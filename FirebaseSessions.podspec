@@ -35,12 +35,15 @@ Pod::Spec.new do |s|
 
   base_dir = "FirebaseSessions/"
   s.source_files = [
-    base_dir + 'Sources/**/*.swift',
+    base_dir + 'Sources/**/*.{swift,h,m}',
+    base_dir + 'Protogen/**/*.{c,h,m,mm}',
   ]
 
   s.dependency 'FirebaseCore', '~> 10.0'
   s.dependency 'FirebaseCoreExtension', '~> 10.0'
   s.dependency 'FirebaseInstallations', '~> 10.0'
+  s.dependency 'GoogleDataTransport', '~> 9.2'
+  s.dependency 'nanopb', '>= 2.30908.0', '< 2.30910.0'
 
   s.pod_target_xcconfig = {
     'GCC_C_LANGUAGE_STANDARD' => 'c99',

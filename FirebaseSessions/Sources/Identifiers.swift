@@ -28,7 +28,7 @@ protocol IdentifierProvider {
     get
   }
 
-  var lastSessionID: String {
+  var previousSessionID: String {
     get
   }
 }
@@ -103,7 +103,7 @@ class Identifiers: IdentifierProvider {
     return UserDefaults.standard.string(forKey: sessionIDUserDefaultsKey) ?? ""
   }
 
-  var lastSessionID: String {
+  var previousSessionID: String {
     return UserDefaults.standard.string(forKey: lastSessionIDUserDefaultsKey) ?? ""
   }
 }

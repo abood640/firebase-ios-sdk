@@ -1,3 +1,4 @@
+//
 // Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 import Foundation
 
-///
-/// SessionCoordinator is responsible for coordinating the systems in this SDK
-/// involved with sending a Session Start event.
-///
-class SessionCoordinator {
-  private let identifiers: IdentifierProvider
+protocol TimeProvider {
+  var timestampUS: Int64 { get }
+}
 
-  init(identifiers: IdentifierProvider) {
-    self.identifiers = identifiers
-  }
-
-  func runMain(event: SessionStartEvent) {
-    // TODO:
+class Time: TimeProvider {
+  var timestampUS: Int64 {
+    return Int64(UInt64(Date().timeIntervalSince1970) * USEC_PER_SEC)
   }
 }

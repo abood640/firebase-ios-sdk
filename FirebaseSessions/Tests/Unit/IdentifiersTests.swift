@@ -18,11 +18,13 @@ import XCTest
 @testable import FirebaseSessions
 @testable import FirebaseInstallations
 
-var installations = MockInstallationsProtocol()
-var identifiers = Identifiers(installations: installations)
 
 class IdentifiersTests: XCTestCase {
-  override func setUpWithError() throws {
+
+  var installationIDProvider: MockInstallationIDProvider!
+  var identifiers: Identifiers!
+
+  override func setUp() {
     // Clear all UserDefaults
     if let appDomain = Bundle.main.bundleIdentifier {
       UserDefaults.standard.removePersistentDomain(forName: appDomain)
@@ -51,7 +53,7 @@ class IdentifiersTests: XCTestCase {
   func testInitialSessionIDGeneration() throws {
     identifiers.generateNewSessionID()
     assert(isValidSessionID(identifiers.sessionID))
-    assert(identifiers.lastSessionID.count == 0)
+    assert(identifiers.previousSessionID.count == 0)
   }
 
   func testRotateSessionID() throws {
@@ -59,15 +61,15 @@ class IdentifiersTests: XCTestCase {
 
     let firstSessionID = identifiers.sessionID
     assert(isValidSessionID(identifiers.sessionID))
-    assert(identifiers.lastSessionID.count == 0)
+    assert(identifiers.previousSessionID.count == 0)
 
     identifiers.generateNewSessionID()
 
     assert(isValidSessionID(identifiers.sessionID))
-    assert(isValidSessionID(identifiers.lastSessionID))
+    assert(isValidSessionID(identifiers.previousSessionID))
 
     // Ensure the new lastSessionID is equal to the sessionID from earlier
-    assert(identifiers.lastSessionID.compare(firstSessionID) == ComparisonResult.orderedSame)
+    assert(identifiers.previousSessionID.compare(firstSessionID) == ComparisonResult.orderedSame)
   }
 
   // Fetching FIIDs requires that we are on a background thread.

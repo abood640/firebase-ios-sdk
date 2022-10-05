@@ -35,6 +35,7 @@ protocol SessionsProvider {
   private let coordinator: SessionCoordinator
   private let initiator: SessionInitiator
   private let identifiers: Identifiers
+  private let time: TimeProvider
 
   // MARK: - Initializers
 
@@ -42,26 +43,29 @@ protocol SessionsProvider {
     let identifiers = Identifiers(installations: installations)
     let coordinator = SessionCoordinator(identifiers: identifiers)
     let initiator = SessionInitiator()
+    let time = Time()
 
     self.init(appID: appID,
               identifiers: identifiers,
               coordinator: coordinator,
-              initiator: initiator)
+              initiator: initiator,
+              time: time)
   }
 
-  init(appID: String, identifiers: Identifiers, coordinator: SessionCoordinator,
-       initiator: SessionInitiator) {
+  init(appID: String, identifiers: Identifiers, coordinator: SessionCoordinator, initiator: SessionInitiator, time: TimeProvider) {
     self.appID = appID
 
     self.identifiers = identifiers
     self.coordinator = coordinator
     self.initiator = initiator
+    self.time = time
 
     super.init()
 
     self.initiator.beginListening {
       self.identifiers.generateNewSessionID()
-      self.coordinator.runMain()
+      let event = SessionStartEvent(identifiers: self.identifiers, time: self.time)
+      self.coordinator.runMain(event: event)
     }
   }
 
