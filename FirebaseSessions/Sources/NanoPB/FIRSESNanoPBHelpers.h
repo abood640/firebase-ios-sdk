@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef FIRSESNanoPBHelpers_h
 #define FIRSESNanoPBHelpers_h
 
@@ -72,11 +71,9 @@ BOOL isPBStringEqual(pb_bytes_array_t *pbString, NSString *str) {
   return isPBArrayEqual(pbString, expected);
 }
 
-
 BOOL isPBDataEqual(pb_bytes_array_t *pbString, NSData *data) {
   pb_bytes_array_t *expected = FIRSESEncodeData(data);
   return isPBArrayEqual(pbString, expected);
 }
-
 
 #endif /* FIRSESNanoPBHelpers_h */

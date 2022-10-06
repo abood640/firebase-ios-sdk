@@ -18,10 +18,8 @@ import XCTest
 @testable import FirebaseSessions
 @testable import FirebaseInstallations
 
-
 class IdentifiersTests: XCTestCase {
-
-  var installationIDProvider: MockInstallationIDProvider!
+  var installations: MockInstallationsProtocol!
   var identifiers: Identifiers!
 
   override func setUp() {
@@ -80,8 +78,8 @@ class IdentifiersTests: XCTestCase {
 
     let expectation = XCTestExpectation(description: "Get the Installation ID Asynchronously")
 
-    DispatchQueue.global().async {
-      XCTAssertEqual(identifiers.installationID, testID)
+    DispatchQueue.global().async { [self] in
+      XCTAssertEqual(self.identifiers.installationID, testID)
       expectation.fulfill()
     }
 
@@ -94,8 +92,8 @@ class IdentifiersTests: XCTestCase {
 
     let expectation = XCTestExpectation(description: "Get the Installation ID Asynchronously")
 
-    DispatchQueue.global().async {
-      XCTAssertEqual(identifiers.installationID, "")
+    DispatchQueue.global().async { [self] in
+      XCTAssertEqual(self.identifiers.installationID, "")
       expectation.fulfill()
     }
 

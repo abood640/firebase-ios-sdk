@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import Foundation
 
 ///
@@ -22,19 +21,18 @@ import Foundation
 ///   2) Synthesizing itself for persisting to disk and logging to GoogleDataTransport
 ///
 class SessionStartEvent: NSObject {
-  
   var proto: firebase_appquality_SessionEvent
 
   init(identifiers: IdentifierProvider, time: TimeProvider) {
-    self.proto = firebase_appquality_SessionEvent()
-    
+    proto = firebase_appquality_SessionEvent()
+
     super.init()
-    
-    self.proto.event_type = firebase_appquality_EventType_EVENT_SESSION_START
-    self.proto.session_id = self.makeProtoString(identifiers.sessionID)
-    self.proto.previous_session_id = self.makeProtoString(identifiers.previousSessionID)
-    self.proto.firebase_installation_id = self.makeProtoString(identifiers.installationID)
-    self.proto.event_timestamp_us = time.timestampUS
+
+    proto.event_type = firebase_appquality_EventType_EVENT_SESSION_START
+    proto.session_id = makeProtoString(identifiers.sessionID)
+    proto.previous_session_id = makeProtoString(identifiers.previousSessionID)
+    proto.firebase_installation_id = makeProtoString(identifiers.installationID)
+    proto.event_timestamp_us = time.timestampUS
   }
 
   private func makeProtoString(_ string: String) -> UnsafeMutablePointer<pb_bytes_array_t> {

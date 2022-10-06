@@ -52,7 +52,8 @@ protocol SessionsProvider {
               time: time)
   }
 
-  init(appID: String, identifiers: Identifiers, coordinator: SessionCoordinator, initiator: SessionInitiator, time: TimeProvider) {
+  init(appID: String, identifiers: Identifiers, coordinator: SessionCoordinator,
+       initiator: SessionInitiator, time: TimeProvider) {
     self.appID = appID
 
     self.identifiers = identifiers
