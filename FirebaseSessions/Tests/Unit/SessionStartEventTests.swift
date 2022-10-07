@@ -30,7 +30,7 @@ class SessionStartEventTests: XCTestCase {
 
   // The file and line fields in this function capture the file and line of the
   // function call site in the test, and pass them to XCTAssert. Without this, the
-  // test will attribute the failure to this function instead of the call in the test.
+  // test will attribute the test failure to this function instead of the call in the test.
   func assertEqualProtoString(_ value: UnsafeMutablePointer<pb_bytes_array_t>!, expected: String,
                               fieldName: String, file: StaticString = #filePath,
                               line: UInt = #line) {
